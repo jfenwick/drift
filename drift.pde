@@ -10,6 +10,8 @@ color c2 = color(100, 50, 255);
 // color of right ellipse
 color c3 = color(0, 200, 255);
 
+boolean back_ellipse = true;
+
 void setup() {
   size(1280, 800);
   background(bgcolor);
@@ -27,11 +29,13 @@ void mousePressed() {
     Dimensions d = new Dimensions();
     fill(bgcolor);
     stroke(bgcolor);
-    // makes the drift shape blend in with background
-    ellipse(0, 0, 2*abs(d.d_radius)+d.e_height, 2*abs(d.d_radius)+d.e_height);
+    // optional ellipse to makes the drift shape blend in with background
+    if (back_ellipse) {
+      ellipse(0, 0, 2*d.d_radius+d.e_height, 2*d.d_radius+d.e_height);
+    }
     float cur_angle = 0;
     float[] scale_amounts = {1.0, 0.84, 0.7, 0.59, 0.49, 0.41, 0.34, 0.29, 0.24, 0.20, 0.17, 0.15, 0.13, 0.11, 0.10, 0.08, 0.07, 0.06, 0.05, 0.04, 0.03, 0.02, 0.015, 0.01};
-    int drift_mode = 1;
+    int drift_mode = 2;
     
     switch(drift_mode) {
       case 0:
@@ -96,16 +100,25 @@ public void draw_node(float deg, Dimensions d, float d_scale) {
 }
 
 public class Dimensions {
+  // x center of left ellipse
   public float r_x1 = -12;
+  // x center of right ellipse
   public float r_x2 = 12;
+  // rect width
   public float r_width = 20;
+  // rect height
   public float r_height = 30;
+  // ellipse width (left and right)
   public float e_width = 15;
+  // ellipse height (left and right)
   public float e_height = 30;
-
-  public float d_radius = -170;
+  // distance from center
+  public float d_radius = 170;
+  // angle between each each node
   public float angle = 15;
+  // total number of degrees
   public float max_angle = 360;
+  // number of subdivisions
   public float subdivisions = max_angle / angle;
 
   Dimensions() {
